@@ -33,7 +33,7 @@ class VkApiMethods:
                                       "access_token": self.token,
                                       "owner_id": owner_id,
                                       "message": text,
-                                      "publish_date": publish_date,
+                                      # "publish_date": publish_date,
                                       "attachments": f'photo{user_id}_{pic_id}',
                                       "v": self.api_version,
                                      }

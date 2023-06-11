@@ -1,16 +1,7 @@
-from project.Api.access_data import AccessData
-from project.pic.path_to_pic import PATH_TO_PIC
 import datetime as DT
 import requests
 import os
 
-
-TEXT = 'this is test message'
-OWNER_ID = AccessData.OWNER_ID
-DATE = '2023-06-05 22:43:00'
-PIC_PATH = '/cat.jpg'
-DIR_PATH = os.path.dirname(os.path.realpath(__file__))
-PATH_TO_PIC = os.path.join(DIR_PATH + PIC_PATH)
 
 class ApiData:
     API_URL = 'https://api.vk.com/method/'
@@ -71,12 +62,13 @@ class VkApiMethods:
                                      "v": self.api_version,
                                  }
                                  ).json()
-        print(resp_url)
         return resp_url["response"]["upload_url"]
 
 
     @staticmethod
-    def send_pic_to_url(upload_url, image_path):
+    def send_pic_to_url(upload_url, image_name):
+        DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+        image_path = os.path.join(DIR_PATH + '/' + image_name)
         file = {"file1": open(f"{image_path}", "rb")}
         response_photo = requests.post(upload_url, files=file).json()
         return (response_photo["photo"],
@@ -104,27 +96,30 @@ def date_to_unix(date: str):
     return dt.timestamp()
 
 
-def add_post_with_pic(pub_date=None):
+def add_post_with_pic(token, owner_id, text, pic_name, pub_date=None):
     # получаем url загрузки, создавая при этом экземпляр VkApiMethods
     upload_url = VkApiMethods(api_url=ApiData.API_URL,
-                              token=AccessData.TOKEN,
+                              token=token,
                               api_version=ApiData.API_VERSION).get_upload_url()
 
     # без создания экземпляра класса?
     photo, server, photo_hash = VkApiMethods(api_url=ApiData.API_URL,
-                                             token=AccessData.TOKEN,
+                                             token=token,
                                              api_version=ApiData.API_VERSION).send_pic_to_url(
-        upload_url=upload_url, image_path=PATH_TO_PIC)
+        upload_url=upload_url, image_name=pic_name)
 
     user_id, photo_id, url = VkApiMethods(api_url=ApiData.API_URL,
-                                          token=AccessData.TOKEN,
+                                          token=token,
                                           api_version=ApiData.API_VERSION).save_photo_before_post(photo=photo,
                                                                                                   server=server,
                                                                                                   photo_hash=photo_hash)
     post_id = VkApiMethods(api_url=ApiData.API_URL,
-                           token=AccessData.TOKEN,
+                           token=token,
                            api_version=ApiData.API_VERSION
                            ).post_on_wall(
-                           text=TEXT, owner_id=OWNER_ID, user_id=user_id, publish_date=pub_date, pic_id=photo_id)
+                           text=text, owner_id=owner_id, user_id=user_id, publish_date=pub_date, pic_id=photo_id)
 
     return post_id
+
+
+add_post_with_pic(token='vk1.a.GejAv1tQrm4gotI8uRxENm13sEobFKmXHrelkefVpEr-31wzVVqv5bI80I5quXwOFPZLpo2EqMPyviFI4Es4W8hcRzOmLHBwbvdBXLrxOMw7ji36KtNNAzfAb4Catq3EXaxjqNcXmJGIyIV_rBUeCNt15_jcSvaY0F2uADg76sJvOd7y9K_ka_HEAtLmkf4yGrgpYbWmE3anU3xt6gZ1Mg', owner_id=-56877160, text='vk 2555551file', pic_name='cat.jpg', pub_date='2023-06-11 13:23:00')
