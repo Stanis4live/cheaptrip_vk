@@ -7,11 +7,11 @@ from project.Api.api_vk_data import ApiData
 
 TEXT = 'this is test message'
 OWNER_ID = AccessData.OWNER_ID
-DATE = '2023-06-08 13:59:00'
+DATE = '2023-06-11 12:47:00'
 PUB_DATE = date_to_unix(DATE)
 
 
-def add_post_with_pic(sender):
+def add_post_with_pic():
     # получаем url загрузки, создавая при этом экземпляр VkApiMethods
     upload_url = VkApiMethods(api_url=ApiData.API_URL,
                               token=AccessData.TOKEN,

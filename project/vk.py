@@ -1,6 +1,27 @@
+from project.Api.access_data import AccessData
+from project.pic.path_to_pic import PATH_TO_PIC
+import datetime as DT
 import requests
+import os
 
-from project.Api.api_vk_data import ApiData
+
+TEXT = 'this is test message'
+OWNER_ID = AccessData.OWNER_ID
+DATE = '2023-06-05 22:43:00'
+PIC_PATH = '/cat.jpg'
+DIR_PATH = os.path.dirname(os.path.realpath(__file__))
+PATH_TO_PIC = os.path.join(DIR_PATH + PIC_PATH)
+
+class ApiData:
+    API_URL = 'https://api.vk.com/method/'
+    PIC_UPLOAD_ON_SERVER = 'photos.getWallUploadServer'
+    PIC_SAVE_BEFORE_POST = 'photos.saveWallPhoto'
+    # EDIT_WALL_POST = 'wall.edit'
+    POST_ON_WALL = 'wall.post'
+    # CREAT_COMMENT = 'wall.createComment'
+    # GET_POST_LIKES = 'wall.getLikes'
+    # DELETE_POST = 'wall.delete'
+    API_VERSION = 5.131
 
 
 class VkApiMethods:
@@ -28,6 +49,8 @@ class VkApiMethods:
 
     # тоже постит на своей странице
     def post_on_wall(self, text, owner_id, user_id, publish_date=None, pic_id=None):
+        if publish_date is not None:
+            publish_date = date_to_unix(publish_date)
         resp_post = requests.post(self.api_url + ApiData.POST_ON_WALL,
                                   params={
                                       "access_token": self.token,
@@ -74,3 +97,34 @@ class VkApiMethods:
         return (save_photo["response"][0]["owner_id"],
                 save_photo["response"][0]["id"],
                 save_photo["response"][0]["sizes"][5]["url"])
+
+
+def date_to_unix(date: str):
+    dt = DT.datetime.fromisoformat(date)
+    return dt.timestamp()
+
+
+def add_post_with_pic(pub_date=None):
+    # получаем url загрузки, создавая при этом экземпляр VkApiMethods
+    upload_url = VkApiMethods(api_url=ApiData.API_URL,
+                              token=AccessData.TOKEN,
+                              api_version=ApiData.API_VERSION).get_upload_url()
+
+    # без создания экземпляра класса?
+    photo, server, photo_hash = VkApiMethods(api_url=ApiData.API_URL,
+                                             token=AccessData.TOKEN,
+                                             api_version=ApiData.API_VERSION).send_pic_to_url(
+        upload_url=upload_url, image_path=PATH_TO_PIC)
+
+    user_id, photo_id, url = VkApiMethods(api_url=ApiData.API_URL,
+                                          token=AccessData.TOKEN,
+                                          api_version=ApiData.API_VERSION).save_photo_before_post(photo=photo,
+                                                                                                  server=server,
+                                                                                                  photo_hash=photo_hash)
+    post_id = VkApiMethods(api_url=ApiData.API_URL,
+                           token=AccessData.TOKEN,
+                           api_version=ApiData.API_VERSION
+                           ).post_on_wall(
+                           text=TEXT, owner_id=OWNER_ID, user_id=user_id, publish_date=pub_date, pic_id=photo_id)
+
+    return post_id

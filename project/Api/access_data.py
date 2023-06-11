@@ -1,4 +1,4 @@
 class AccessData:
-    OWNER_ID = 5958128
+    OWNER_ID = -56877160
     TOKEN = 'vk1.a.GejAv1tQrm4gotI8uRxENm13sEobFKmXHrelkefVpEr-31wzVVqv5bI80I5quXwOFPZLpo2EqMPyviFI4Es4W8hcRzOmLHBwbvdBXLrxOMw7ji36KtNNAzfAb4Catq3EXaxjqNcXmJGIyIV_rBUeCNt15_jcSvaY0F2uADg76sJvOd7y9K_ka_HEAtLmkf4yGrgpYbWmE3anU3xt6gZ1Mg'
-    GROUP_TOKEN = 'vk1.a.Lg51kEQRkzxgcKU_fGnaXmODU-HySd-NBSQMjDq2Y0IIUBPJGvZuLJC4xL9OooJOenOuaO8knkbOhyuUhcFX5prq9fQtZ2R1GOnJNfGtHvZG0a2gjmbp3AOThb-bsjRH81mUI-fB6OaqeCo2Kw5vFjI0cH2ukDm-Sta5wG44XzJ08aROvUaGQbqcWdcgv6a-5GqkPewgXIrTisZHiBpvog'
+    # GROUP_TOKEN = 'vk1.a.Lg51kEQRkzxgcKU_fGnaXmODU-HySd-NBSQMjDq2Y0IIUBPJGvZuLJC4xL9OooJOenOuaO8knkbOhyuUhcFX5prq9fQtZ2R1GOnJNfGtHvZG0a2gjmbp3AOThb-bsjRH81mUI-fB6OaqeCo2Kw5vFjI0cH2ukDm-Sta5wG44XzJ08aROvUaGQbqcWdcgv6a-5GqkPewgXIrTisZHiBpvog'
