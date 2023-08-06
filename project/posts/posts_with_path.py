@@ -55,7 +55,7 @@ class VkApiMethods:
                                      "v": self.api_version,
                                  }
                                  ).json()
-
+        print(resp_url)
         return resp_url["response"]["upload_url"]
 
     @staticmethod
@@ -113,4 +113,5 @@ def add_post_with_pic(token, owner_id, post, pic_name, pub_date=None):
 
     return post_id
 
-add_post_with_pic(owner_id=-808422975, post='text.json', pic_name='image.jpg', token='vk1.a.3pQBCY7c8dz7I5vKI_nk6eOOPyb8UVwxC0SRdlzu_P7Z4be-_B-no5WltgM5utxz_F_mE58gtI5YebcDpITnpNlgSIHfjFEBOae2h8UQybhDKVdC3f2ngcj_Ai_kI2bOxSB50H7cDFv0LmuvARJMrO6shfTLVWvbXe-ZcRjIh8ZPqjgL5hwcTW6-uGsdfz94T7HXc7bzCHMAjWQX-TVxfg')
+add_post_with_pic(owner_id=-56877160, post='text.json', pic_name='image.jpg', token='vk1.a.GejAv1tQrm4gotI8uRxENm13sEobFKmXHrelkefVpEr-31wzVVqv5bI80I5quXwOFPZLpo2EqMPyviFI4Es4W8hcRzOmLHBwbvdBXLrxOMw7ji36KtNNAzfAb4Catq3EXaxjqNcXmJGIyIV_rBUeCNt15_jcSvaY0F2uADg76sJvOd7y9K_ka_HEAtLmkf4yGrgpYbWmE3anU3xt6gZ1Mg')
+# add_post_with_pic(owner_id=-221143405, post='text.json', pic_name='image.jpg', token='vk1.a.qn_NnTpjIv8Tzn2_Y4S2ZXbLxT4AeLLmA5dBq64EX5PWVjaoA3MEQBdsgnNZwiUtOpSU0xx3HjZ6Lqe8nftLnJEJy8gZo4QUx-w5GKodRjQowtKGvsRCFw478Qv_p3bbHT1ZtKmAXicXYsv53pNXSyZgharMXiLUtIKOcAHHMDnbFRdI2Jcdp0GIMmAfyB57fzvXK_tgjhjMO8uO9IhTRw')
